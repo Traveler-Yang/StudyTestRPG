@@ -30,10 +30,6 @@ public class LoadingManager : MonoBehaviour
 		MapService.Instance.Init();
 		UserService.Instance.Init();
 		ShopManager.Instance.Init();
-		FriendService.Instance.Init();
-		TempService.Instance.Init();
-		GuildService.Instance.Init();
-		ChatService.Instance.Init();
 		SoundManager.Instance.PlayMusic(SoundDefine.Music_Login);
         for (float i = 0.01f; i <= 1;)
         {

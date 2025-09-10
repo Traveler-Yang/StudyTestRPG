@@ -35,8 +35,6 @@ namespace Models
 
         public PlayerInputContorller CurrentCharacterObject { get; set; }
 
-        public NTempInfo TempInfo { get; set; }
-
         //当前角色骑着的的坐骑
         public int CurrrentRide = 0;
         public void Ride(int id)

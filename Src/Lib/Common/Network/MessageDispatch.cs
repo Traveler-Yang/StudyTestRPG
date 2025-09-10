@@ -20,23 +20,7 @@ namespace Network
             if (message.statusNotify != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.statusNotify); }
             if (message.questAccept != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questAccept); }
             if (message.questSubmit != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questSubmit); }
-            if (message.friendAddReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddReq); }
-            if (message.friendAddRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddRes); }
-            if (message.friendList != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendList); }
-            if (message.friendRemove != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendRemove); }
-            if (message.tempInviteReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.tempInviteReq); }
-            if (message.tempInviteRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.tempInviteRes); }
-            if (message.tempInfo != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.tempInfo); }
-            if (message.TempLeave != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.TempLeave); }
-            if (message.guildCreat != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildCreat); }
-            if (message.guildJoinReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildJoinReq); }
-            if (message.guildJoinRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildJoinRes); }
-            if (message.Guild != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.Guild); }
-            if (message.guildLeave != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildLeave); }
-            if (message.guildList != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildList); }
-            if (message.guildSearch != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildSearch); }
-            if (message.guildAdmin != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildAdmin); }
-            if (message.Chat != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.Chat); }
+
 
         }
 
@@ -54,23 +38,7 @@ namespace Network
             if (message.itemEquip != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.itemEquip); }
             if (message.questAccept != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questAccept); }
             if (message.questSubmit != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questSubmit); }
-            if (message.friendAddReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddReq); }
-            if (message.friendAddRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddRes); }
-            if (message.friendList != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendList); }
-            if (message.friendRemove != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendRemove); }
-            if (message.tempInviteReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.tempInviteReq); }
-            if (message.tempInviteRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.tempInviteRes); }
-            if (message.tempInfo != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.tempInfo); }
-            if (message.TempLeave != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.TempLeave); }
-            if (message.guildCreat != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildCreat); }
-            if (message.guildJoinReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildJoinReq); }
-            if (message.guildJoinRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildJoinRes); }
-            if (message.Guild != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.Guild); }
-            if (message.guildLeave != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildLeave); }
-            if (message.guildList != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildList); }
-            if (message.guildSearch != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildSearch); }
-            if (message.guildAdmin != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.guildAdmin); }
-            if (message.Chat != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.Chat); }
+
 
         }
     }

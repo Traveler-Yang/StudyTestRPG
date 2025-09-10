@@ -6,7 +6,6 @@ using UnityEngine.UI;
 using TMPro;
 using Entities;
 using Common.Data;
-using Assets.Scripts.UI.Temp;
 using Managers;
 
 public class UIMain : MonoSingleton<UIMain>
@@ -15,7 +14,6 @@ public class UIMain : MonoSingleton<UIMain>
 	public TextMeshProUGUI avatarLevel;//玩家等级
 	public Image Icon;//玩家头像
 	public Image miniMapIcon;//小地图头像
-	public UITemp TempWindow;
     protected override void OnStart()
     {
 		this.UpdateAvatar();
@@ -28,8 +26,6 @@ public class UIMain : MonoSingleton<UIMain>
 		this.avatarName.text = string.Format("{0}", User.Instance.CurrentCharacter.Name);
 		//将角色的等级赋值给UI显示
 		this.avatarLevel.text = User.Instance.CurrentCharacter.Level.ToString();
-		this.Icon.overrideSprite = SpriteManager.Instance.classIcons[(int)User.Instance.CurrentCharacter.Class - 1];
-        this.miniMapIcon.overrideSprite = SpriteManager.Instance.classIcons[(int)User.Instance.CurrentCharacter.Class - 1];
     }
 	
 	// Update is called once per frame
@@ -70,7 +66,6 @@ public class UIMain : MonoSingleton<UIMain>
 	public static void OnClickFriend()
 	{
         SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Btn_1);
-        UIManager.Instance.Show<UIFriends>();
 	}
 
 	/// <summary>
@@ -79,7 +74,6 @@ public class UIMain : MonoSingleton<UIMain>
 	public static void OnClickGuild()
     {
         SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Btn_1);
-        GuildManager.Instance.ShowGuild();
 	}
 
 	/// <summary>
@@ -88,7 +82,6 @@ public class UIMain : MonoSingleton<UIMain>
 	public static void OnClickRide()
     {
         SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Btn_1);
-        UIManager.Instance.Show<UIRide>();
 	}
 
 	/// <summary>
@@ -120,7 +113,7 @@ public class UIMain : MonoSingleton<UIMain>
 
     public void ShowTeamUI(bool show)
 	{
-		TempWindow.ShowTeam(show);
+		
 	}
 
 }
