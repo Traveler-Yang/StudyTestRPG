@@ -66,7 +66,8 @@ public class UIMain : MonoSingleton<UIMain>
 	public static void OnClickFriend()
 	{
         SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Btn_1);
-	}
+		UIManager.Instance.Show<UIFriend>();
+    }
 
 	/// <summary>
 	/// 公会按钮
@@ -110,10 +111,4 @@ public class UIMain : MonoSingleton<UIMain>
         SoundManager.Instance.PlaySound(SoundDefine.SFX_UI_Btn_1);
         MessageBox.Show("暂未开放", "提示", MessageBoxType.Information);
 	}
-
-    public void ShowTeamUI(bool show)
-	{
-		
-	}
-
 }

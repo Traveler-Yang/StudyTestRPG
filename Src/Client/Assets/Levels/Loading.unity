@@ -5598,11 +5598,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35d66e2ce7715804fb9a47ff3e2552e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  global: 1
-  classIcons:
-  - {fileID: 21300000, guid: d2b4fabf75481ae4fb3abdd4b01da991, type: 3}
-  - {fileID: 21300000, guid: 2f6cf26d3ff23d640a927ce07a37844a, type: 3}
-  - {fileID: 21300000, guid: 51ef962810165ab40b59684f5cd8b7ae, type: 3}
 --- !u!4 &2134966796
 Transform:
   m_ObjectHideFlags: 0

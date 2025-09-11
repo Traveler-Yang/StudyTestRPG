@@ -204,6 +204,10 @@ message NetMessageRequest{
 	QuestAcceptRequest questAccept = 13;
 	QuestSubmitRequest questSubmit = 14;
 
+    FriendAddRequest friendAdd = 15;
+    FriendApproveRequest friendApprove = 16;
+    FriendRemoveRequest friendRemove = 17;
+
 }
 
 message NetMessageResponse{
@@ -225,6 +229,12 @@ message NetMessageResponse{
 	QuestAcceptResponse questAccept = 13;
 	QuestSubmitResponse questSubmit = 14;
 
+    FriendAddResponse friendAdd = 15;
+    FriendApproveResponse friendApprove = 16;
+    FriendListResponse friendList = 17;
+    FriendRemoveResponse friendRemove = 18;
+	FriendAddNotify friendAddNotify = 19;
+	FriendApproveNotify friendApproveNotify = 20;
 
 	StatusNotify statusNotify = 100;
 	
@@ -444,3 +454,78 @@ message QuestAbandonResponse
 
 
 //Friend System
+
+message NFriendInfo//好友信息
+{
+	int32 id = 1;//id
+	string name = 2;//名字
+	int32 level = 3;//等级
+	string class = 4;//职业
+	FRIEND_STATUS status = 5;//状态
+}
+
+enum FRIEND_STATUS//好友状态
+{
+	ONLINE = 0;//在线
+	OFFLINE = 1;//离线
+}
+
+enum FRIEND_RESULT//好友请求结果
+{
+	AGREE = 0;//同意
+	REJECT = 1;//拒绝
+}
+
+message FriendAddRequest//请求申请添加好友的请求
+{
+	int32 to_id = 1;//目标id
+}
+
+message FriendAddResponse//请求申请添加好友的响应
+{
+	RESULT result = 1;
+	string errormsg = 2;
+}
+
+message FriendAddNotify//推送被申请者的好友申请通知
+{
+	int32 from_id = 1;//来源id
+	string from_name = 2;//来源名字
+	int32 from_level = 3;//来源等级
+	string from_class = 4;//来源职业
+}
+
+message FriendApproveRequest//被申请者的处理的请求
+{
+	int32 from_id = 1;//来源id
+	FRIEND_RESULT result = 2;//结果
+}
+
+message FriendApproveResponse//被申请者的处理的响应
+{
+	RESULT result = 1;
+	string errormsg = 2;
+}
+
+message FriendApproveNotify//好友申请审批结果
+{
+	int32 from_id = 1;//来源id
+	string from_name = 2;//来源名字
+	FRIEND_RESULT result = 3;//结果
+}
+
+message FriendListResponse//好友列表更新
+{
+	repeated NFriendInfo friends = 1;
+}
+
+message FriendRemoveRequest//删除好友请求
+{
+	int32 to_id = 1;//目标id
+}
+
+message FriendRemoveResponse//删除好友响应
+{
+	RESULT result = 3;
+	string errormsg = 4;
+}
