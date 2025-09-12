@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using Models;
+using Managers;
+using Entities;
 
 public class UIFriend : UIWindow
 {
@@ -35,26 +37,57 @@ public class UIFriend : UIWindow
     /// </summary>
     public void OnSearchClick()
     {
-        if (inputField.text != "")
+        
+    }
+
+    /// <summary>
+    /// 私聊按钮
+    /// </summary>
+    public void OnFriendChatClick()
+    {
+        MessageBox.Show("暂未开放");
+    }
+
+    /// <summary>
+    /// 添加好友按钮
+    /// </summary>
+    public void OnFriendAddClick()
+    {
+        InputBox.Show("请输入要添加的好友ID或名称", "添加好友").OnSubmit += AddFriend_OnSubmit;
+    }
+
+    private bool AddFriend_OnSubmit(string inputText, out string tips)
+    {
+        int id = 0;
+        string name = "";
+        if (int.TryParse(inputText, out id))
         {
-            int id = 0;
-            //如果输入的是数字，则按ID搜索，否则按名称搜索
-            if (int.TryParse(inputField.text, out id))
+            //要添加的好友不能是自己
+            if (User.Instance.CurrentCharacter.Id.ToString() == inputText)
             {
-                if (User.Instance.CurrentCharacter.Id == id)
-                {
-                    MessageBox.Show("不能添加自己为好友", "好友搜索", MessageBoxType.Information);
-                    return;
-                }else
-                {
-                    FriendService.Instance.SendFriendAddReq(id, "");
-                    return;
-                }
+                tips = "不能添加自己为好友";
+                return false;
             }
-            FriendService.Instance.SendFriendAddReq(id, inputField.text);
+            FriendService.Instance.SendFriendAdd(id, name);
+            tips = "发送请求成功";
+            return true;
         }
         else
-            MessageBox.Show("请输入要搜索的好友ID或名称", "好友搜索", MessageBoxType.Information);
+        {
+            //则用名字查找
+            Character cha =  CharacterManager.Instance.GetCharacterByName(inputText);
+            if (cha != null)
+            {
+                FriendService.Instance.SendFriendAdd(cha.Id, cha.Name);
+                tips = "发送请求成功";
+                return true;
+            }
+            else
+            {
+                tips = "没有找到该玩家";
+                return false;
+            }
+        }
     }
 
     public void Clear()

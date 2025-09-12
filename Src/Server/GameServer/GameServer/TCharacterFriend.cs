@@ -12,7 +12,7 @@ namespace GameServer
     using System;
     using System.Collections.Generic;
     
-    public partial class TCharacterFriends
+    public partial class TCharacterFriend
     {
         public int Id { get; set; }
         public int UserID { get; set; }

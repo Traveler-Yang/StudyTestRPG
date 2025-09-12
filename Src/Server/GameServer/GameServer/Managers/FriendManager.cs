@@ -1,5 +1,6 @@
 ﻿using Common;
 using GameServer.Entities;
+using GameServer.Services;
 using SkillBridge.Message;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,23 @@ namespace GameServer.Managers
         public void GetFriendInfos(List<NFriendInfo> friends)
         {
             
+        }
+
+        /// <summary>
+        /// 添加好友
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="toId"></param>
+        public void AddFriend(int id, int toId)
+        {
+            TCharacterFriend friend = new TCharacterFriend()
+            {
+                UserID = toId,
+                FriendID = id,
+                CreateTime = DateTime.Now,
+                UpdateTime = DateTime.Now
+            };
+            DBService.Instance.Entities.TCharacterFriend.Add(friend);
         }
     }
 }

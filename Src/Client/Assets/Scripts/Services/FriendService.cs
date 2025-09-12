@@ -12,15 +12,16 @@ public class FriendService : Singleton<FriendService>, IDisposable
     public FriendService()
     {
         MessageDistributer.Instance.Subscribe<FriendAddRequest>(this.OnFriendAddReq);
-        //MessageDistributer.Instance.Subscribe<FriendAddResponse>(this.OnFriendAddRes);
+        MessageDistributer.Instance.Subscribe<FriendAddResponse>(this.OnFriendAddRes);
         //MessageDistributer.Instance.Subscribe<FriendListRequest>(this.OnFriendList);
         //MessageDistributer.Instance.Subscribe<FriendRemoveRequest>(this.OnFriendRemoveReq);
     }
 
+
     public void Dispose()
     {
         MessageDistributer.Instance.Unsubscribe<FriendAddRequest>(this.OnFriendAddReq);
-        //MessageDistributer.Instance.Unsubscribe<FriendAddResponse>(this.OnFriendAddRes);
+        MessageDistributer.Instance.Unsubscribe<FriendAddResponse>(this.OnFriendAddRes);
         //MessageDistributer.Instance.Unsubscribe<FriendListRequest>(this.OnFriendList);
         //MessageDistributer.Instance.Unsubscribe<FriendRemoveRequest>(this.OnFriendRemoveReq);
     }
@@ -30,7 +31,7 @@ public class FriendService : Singleton<FriendService>, IDisposable
     /// </summary>
     /// <param name="toId"></param>
     /// <param name="toName"></param>
-    public void SendFriendAddReq(int toId, string toName)
+    public void SendFriendAdd(int toId, string toName)
     {
         NetMessage message = new NetMessage();
         message.Request = new NetMessageRequest();
@@ -44,6 +45,24 @@ public class FriendService : Singleton<FriendService>, IDisposable
 
     /// <summary>
     /// 接收添加好友请求的回应
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="message"></param>
+    private void OnFriendAddRes(object sender, FriendAddResponse response)
+    {
+        Debug.LogFormat("OnFriendAddRes:{0} [{1}]", response.Result, response.Errormsg);
+        if (response.Result == Result.Success)
+        {
+            MessageBox.Show("添加好友" + response.Request.ToName + "成功", "添加好友");
+        }
+        else
+        {
+            MessageBox.Show("添加好友失败:\n" + response.Errormsg, "添加好友", MessageBoxType.Error);
+        }
+    }
+
+    /// <summary>
+    /// 
     /// </summary>
     /// <param name="sender"></param>
     /// <param name="message"></param>
