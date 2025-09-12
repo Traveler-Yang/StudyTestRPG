@@ -20,11 +20,11 @@ namespace Network
             if (message.statusNotify != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.statusNotify); }
             if (message.questAccept != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questAccept); }
             if (message.questSubmit != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questSubmit); }
-            if (message.friendAdd != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAdd); }
-            if (message.friendApprove != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendApprove); }
-            if (message.friendRemove != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendRemove); }
+            if (message.friendAddReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddReq); }
+            if (message.friendAddRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddRes); }
             if (message.friendList != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendList); }
-            if (message.friendAddNotify != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddNotify); }
+            if (message.friendRemoveRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendRemoveRes); }
+
         }
 
         public void Dispatch(T sender, SkillBridge.Message.NetMessageRequest message)
@@ -41,9 +41,10 @@ namespace Network
             if (message.itemEquip != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.itemEquip); }
             if (message.questAccept != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questAccept); }
             if (message.questSubmit != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questSubmit); }
-            if (message.friendAdd != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAdd); }
-            if (message.friendApprove != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendApprove); }
-            if (message.friendRemove != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendRemove); }
+            if (message.friendAddReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddReq); }
+            if (message.friendAddRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddRes); }
+            if (message.friendList != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendList); }
+            if (message.friendRemoveReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendRemoveReq); }
 
         }
     }

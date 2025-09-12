@@ -14,15 +14,12 @@ namespace GameServer.Services
     {
         public FriendService()
         {
-            //MessageDistributer<NetConnection<NetSession>>.Instance.Subscribe<FriendAddResponse>(this.OnFriendAdd);
-            //MessageDistributer<NetConnection<NetSession>>.Instance.Subscribe<FriendListResponse>(this.OnFriendList);
+
         }
 
         private void OnFriendList(NetConnection<NetSession> sender, FriendListResponse message)
         {
-            //Character character = sender.Session.Character;
-            //sender.Session.Response.friendList = new FriendListResponse();
-            //sender.Session.Response.friendList.Friends = DBService.Instance.Entities.TCharacterFriends.
+
         }
     }
 }

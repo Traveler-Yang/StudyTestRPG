@@ -1,18 +1,14 @@
+using SkillBridge.Message;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FriendManager : MonoBehaviour
+public class FriendManager : Singleton<FriendManager>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public List<NFriendInfo> allFriends;
 
-    // Update is called once per frame
-    void Update()
+    public void Init(List<NFriendInfo> friends)
     {
-        
+        allFriends = friends;
     }
 }

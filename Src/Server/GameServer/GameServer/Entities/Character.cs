@@ -25,6 +25,7 @@ namespace GameServer.Entities
         public ItemManager ItemManager;
         public QuestManager QuestManager;
         public StatusManager StatusManager;
+        public FriendManager FriendManager;
 
 
         public Character(CharacterType type,TCharacter cha):
@@ -54,6 +55,8 @@ namespace GameServer.Entities
             this.QuestManager = new QuestManager(this);
             this.QuestManager.GetQuestInfos(this.Info.Quests);
             this.StatusManager = new StatusManager(this);
+            this.FriendManager = new FriendManager(this);
+            this.FriendManager.GetFriendInfos(this.Info.Friends);
         }
 
         public long Gold

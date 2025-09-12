@@ -120,6 +120,7 @@ MonoBehaviour:
   friendList: {fileID: 4235768481650815760}
   friendPrefab: {fileID: 3939103492777423157, guid: 6d54b00051cc58944940f1370145b1c5,
     type: 3}
+  inputField: {fileID: 3504989650283607730}
   selectedItem: {fileID: 0}
 --- !u!1 &740534904554345927
 GameObject:
@@ -315,7 +316,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1959115617033549297}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -2561828444521847640}
+        m_TargetAssemblyTypeName: UIFriend, Assembly-CSharp
+        m_MethodName: OnSearchClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &894133134442279203
 GameObject:
   m_ObjectHideFlags: 0

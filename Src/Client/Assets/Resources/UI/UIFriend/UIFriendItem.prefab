@@ -303,6 +303,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 32c6ffb0b802f3a43a23da9e66264c27, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  owner: {fileID: 0}
+  icon: {fileID: 7574142942184679572}
+  name: {fileID: 1153948580504130297}
+  level: {fileID: 8169185005823838840}
+  class: {fileID: 943141013895909268}
+  status: {fileID: 4987244686082543393}
+  backGround: {fileID: 4607226525180786395}
+  normalBg: {fileID: 21300000, guid: a6f1c5f8ec5e1481980b1dbc131ac4cd, type: 3}
+  selectBg: {fileID: 21300000, guid: 74b23894ba12d422f886ba422510502a, type: 3}
 --- !u!1 &4376211374122030540
 GameObject:
   m_ObjectHideFlags: 0
