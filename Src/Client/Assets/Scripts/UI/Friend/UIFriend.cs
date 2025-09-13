@@ -63,7 +63,7 @@ public class UIFriend : UIWindow
         if (int.TryParse(inputText, out id))
         {
             //要添加的好友不能是自己
-            if (User.Instance.CurrentCharacter.Id.ToString() == inputText)
+            if (User.Instance.CurrentCharacter.Id == id)
             {
                 tips = "不能添加自己为好友";
                 return false;
@@ -74,8 +74,9 @@ public class UIFriend : UIWindow
         }
         else
         {
+            name = inputText;
             //则用名字查找
-            Character cha =  CharacterManager.Instance.GetCharacterByName(inputText);
+            Character cha =  CharacterManager.Instance.GetCharacterByName(name);
             if (cha != null)
             {
                 FriendService.Instance.SendFriendAdd(cha.Id, cha.Name);

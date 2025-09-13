@@ -17,7 +17,12 @@ namespace GameServer.Services
         {
             MessageDistributer<NetConnection<NetSession>>.Instance.Subscribe<FriendAddRequest>(this.OnFriendAddReq);
             MessageDistributer<NetConnection<NetSession>>.Instance.Subscribe<FriendAddResponse>(this.OnFriendAddRes);
-            MessageDistributer<NetConnection<NetSession>>.Instance.Subscribe<FriendRemoveResponse>(this.OnFriendRemoveRes);
+            MessageDistributer<NetConnection<NetSession>>.Instance.Subscribe<FriendRemoveRequest>(this.OnFriendRemoveReq);
+        }
+
+        public void Init()
+        {
+
         }
 
         /// <summary>
@@ -35,7 +40,7 @@ namespace GameServer.Services
             //目标角色存在
             if (cha != null)
             {
-                var friend = DBService.Instance.Entities.TCharacterFriend.Where(f => f.Id == request.ToId).FirstOrDefault();
+                var friend = DBService.Instance.Entities.TCharacterFriends.Where(f => f.Id == request.ToId).FirstOrDefault();
                 //判断是否已经是好友
                 if (friend != null)
                 {
@@ -49,18 +54,9 @@ namespace GameServer.Services
                 NetConnection<NetSession> to = SessionManager.Instance.GetSession(request.ToId);
                 if (to != null)
                 {
-                    to.Session.Response.friendAddRes = new FriendAddResponse();
-                    to.Session.Response.friendAddRes.Request = request;
+                    to.Session.Response.friendAddReq = request;
                     to.SendResPonse();
                 }
-                //如果不在线，则直接添加到数据库
-                else
-                {
-                    character.FriendManager.AddFriend(character.Id, request.ToId);
-                }
-                sender.Session.Response.friendAddRes.Result = Result.Success;
-                sender.Session.Response.friendAddRes.Errormsg = "添加好友成功";
-                sender.SendResPonse();
             }
             else
             {
@@ -70,12 +66,29 @@ namespace GameServer.Services
             }
         }
 
-        private void OnFriendAddRes(NetConnection<NetSession> sender, FriendAddResponse message)
+        private void OnFriendAddRes(NetConnection<NetSession> sender, FriendAddResponse response)
         {
-            
+            Character character = sender.Session.Character;
+            Log.InfoFormat("OnFriendAddRes : : Result [{0}] : ErrorMsg [{1}]", response.Result, response.Errormsg);
+            if (response.Result == Result.Success)
+            {
+                //同意添加好友
+                NetConnection<NetSession> requester = SessionManager.Instance.GetSession(response.Request.FromId);
+                if (requester != null)
+                {
+                    //加好友
+                    character.FriendManager.AddFriend(response.Request.FromId, response.Request.ToId);
+                    requester.Session.Character.FriendManager.AddFriend(response.Request.ToId, response.Request.FromId);
+                    DBService.Instance.Save();
+                    requester.Session.Response.friendRemoveRes = new FriendRemoveResponse();
+                    requester.Session.Response.friendRemoveRes.Result = Result.Success;
+                    requester.Session.Response.friendRemoveRes.Errormsg = response.Errormsg;
+                    requester.SendResPonse();
+                }
+            }
         }
 
-        private void OnFriendRemoveRes(NetConnection<NetSession> sender, FriendRemoveResponse message)
+        private void OnFriendRemoveReq(NetConnection<NetSession> sender, FriendRemoveRequest message)
         {
             
         }

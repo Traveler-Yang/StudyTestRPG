@@ -41,6 +41,6 @@ public class UIFriendItem : ListView.ListViewItem
                 this.@class.text = "弓箭手";
                 break;
         }
-        this.status.text = this.info.Status.ToString();
+        this.status.text = this.info.Status ? "在线" : "离线";
     }
 }

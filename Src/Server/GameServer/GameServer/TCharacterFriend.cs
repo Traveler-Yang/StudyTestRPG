@@ -15,10 +15,11 @@ namespace GameServer
     public partial class TCharacterFriend
     {
         public int Id { get; set; }
-        public int UserID { get; set; }
+        public int CharacterID { get; set; }
         public int FriendID { get; set; }
-        public System.DateTime CreateTime { get; set; }
-        public System.DateTime UpdateTime { get; set; }
+        public string Name { get; set; }
+        public int Level { get; set; }
+        public int Class { get; set; }
     
         public virtual TCharacter Owner { get; set; }
     }

@@ -191,7 +191,7 @@ namespace GameServer.Services
             sender.Session.Response.gameEnter.Errormsg = "None";//错误信息
 
             sender.Session.Character = character;
-            //sender.Session.PostResponser = character;//进入游戏给后处理器赋值（里氏替换）
+            sender.Session.PostResponser = character;//进入游戏给后处理器赋值（里氏替换）
 
             sender.Session.Response.gameEnter.Character = character.Info;//进入成功 发送初始角色信息给客户端
             sender.SendResPonse();
