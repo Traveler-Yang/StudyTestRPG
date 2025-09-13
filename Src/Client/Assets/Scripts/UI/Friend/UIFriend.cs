@@ -5,6 +5,7 @@ using TMPro;
 using Models;
 using Managers;
 using Entities;
+using System;
 
 public class UIFriend : UIWindow
 {
@@ -15,11 +16,26 @@ public class UIFriend : UIWindow
 
     void Start()
     {
+        FriendService.Instance.OnFriendsUpdate = RefreshUI;
+        friendList.onItemSelected += OnSelectedItem;
         RefreshUI();
     }
 
+    void OnEnable()
+    {
+        FriendService.Instance.OnFriendsUpdate += RefreshUI;
+    }
 
-    
+    void OnDisable()
+    {
+        FriendService.Instance.OnFriendsUpdate -= RefreshUI;
+    }
+
+    private void OnSelectedItem(ListView.ListViewItem item)
+    {
+        selectedItem = item as UIFriendItem;
+    }
+
     public void Init()
     {
         foreach (var friend in FriendManager.Instance.allFriends)
@@ -68,7 +84,7 @@ public class UIFriend : UIWindow
                 tips = "不能添加自己为好友";
                 return false;
             }
-            FriendService.Instance.SendFriendAdd(id, name);
+            FriendService.Instance.SendFriendAdd(id, User.Instance.CurrentCharacter.Name);
             tips = "发送请求成功";
             return true;
         }

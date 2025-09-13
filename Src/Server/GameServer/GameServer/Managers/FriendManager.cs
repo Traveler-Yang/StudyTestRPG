@@ -75,8 +75,7 @@ namespace GameServer.Managers
 
         public void GetFriendInfos(List<NFriendInfo> friends)
         {
-            friends.Clear();
-            foreach (var friend in friends)
+            foreach (var friend in this.friends)
             {
                 friends.Add(friend);
             }
@@ -113,6 +112,7 @@ namespace GameServer.Managers
                     friend.FriendManager.UpdateFriendstatus(Owner.Info, false);
                 }
             }
+            FriendIsChanged = true;
         }
 
         /// <summary>
@@ -126,9 +126,9 @@ namespace GameServer.Managers
             {
                 CharacterID = toId,
                 FriendID = id,
-                Name = CharacterManager.Instance.GetCharacter(toId).Info.Name,
-                Level = CharacterManager.Instance.GetCharacter(toId).Info.Level,
-                Class = (int)CharacterManager.Instance.GetCharacter(toId).Info.Class,
+                Name = CharacterManager.Instance.GetCharacter(id).Info.Name,
+                Level = CharacterManager.Instance.GetCharacter(id).Info.Level,
+                Class = (int)CharacterManager.Instance.GetCharacter(id).Info.Class,
             };
             Owner.TChar.Friends.Add(friend);
             FriendIsChanged = true;

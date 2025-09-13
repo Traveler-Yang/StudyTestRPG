@@ -6,23 +6,30 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class FriendService : Singleton<FriendService>, IDisposable
 {
+    public UnityAction OnFriendsUpdate;
+
+    public void Init()
+    {
+
+    }
+
     public FriendService()
     {
         MessageDistributer.Instance.Subscribe<FriendAddRequest>(this.OnFriendAddReq);
         MessageDistributer.Instance.Subscribe<FriendAddResponse>(this.OnFriendAddRes);
-        //MessageDistributer.Instance.Subscribe<FriendListResponse>(this.OnFriendList);
+        MessageDistributer.Instance.Subscribe<FriendListResponse>(this.OnFriendList);
         //MessageDistributer.Instance.Subscribe<FriendRemoveResponse>(this.OnFriendRemoveReq);
     }
-
 
     public void Dispose()
     {
         MessageDistributer.Instance.Unsubscribe<FriendAddRequest>(this.OnFriendAddReq);
         MessageDistributer.Instance.Unsubscribe<FriendAddResponse>(this.OnFriendAddRes);
-        //MessageDistributer.Instance.Unsubscribe<FriendListResponse>(this.OnFriendList);
+        MessageDistributer.Instance.Unsubscribe<FriendListResponse>(this.OnFriendList);
         //MessageDistributer.Instance.Unsubscribe<FriendRemoveResponse>(this.OnFriendRemoveReq);
     }
 
@@ -51,11 +58,11 @@ public class FriendService : Singleton<FriendService>, IDisposable
     private void OnFriendAddRes(object sender, FriendAddResponse response)
     {
         Debug.LogFormat("OnFriendAddRes:{0} [{1}]", response.Result, response.Errormsg);
-        if (sender == null)
+        if (response.Request == null)
             return;
         if (response.Result == Result.Success)
         {
-            MessageBox.Show("添加好友:" + response.Request.ToName + "成功", "添加好友");
+            MessageBox.Show(string.Format("{0}{1}了你的请求", response.Request.ToName, response.Errormsg), "添加好友");
         }
         else
             MessageBox.Show("添加好友失败:\n" + response.Errormsg, "添加好友", MessageBoxType.Error);
@@ -89,5 +96,13 @@ public class FriendService : Singleton<FriendService>, IDisposable
         {
             SendFriendAddResponse(false, message);
         };
+    }
+
+    private void OnFriendList(object sender, FriendListResponse response)
+    {
+        Debug.LogFormat("OnFriendList: [{0}] : [{1}] : [{2}]", response.Friends.Count, response.Result, response.Errormsg);
+        FriendManager.Instance.allFriends = response.Friends;
+        if(OnFriendsUpdate != null)
+            OnFriendsUpdate.Invoke();
     }
 }

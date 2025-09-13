@@ -70,22 +70,30 @@ namespace GameServer.Services
         {
             Character character = sender.Session.Character;
             Log.InfoFormat("OnFriendAddRes : : Result [{0}] : ErrorMsg [{1}]", response.Result, response.Errormsg);
-            if (response.Result == Result.Success)
+            NetConnection<NetSession> requester = SessionManager.Instance.GetSession(response.Request.FromId);
+            if (requester != null)
             {
                 //同意添加好友
-                NetConnection<NetSession> requester = SessionManager.Instance.GetSession(response.Request.FromId);
-                if (requester != null)
+                requester.Session.Response.friendAddRes = new FriendAddResponse();
+                if (response.Result == Result.Success)
                 {
                     //加好友
                     character.FriendManager.AddFriend(response.Request.FromId, response.Request.ToId);
                     requester.Session.Character.FriendManager.AddFriend(response.Request.ToId, response.Request.FromId);
                     DBService.Instance.Save();
-                    requester.Session.Response.friendRemoveRes = new FriendRemoveResponse();
-                    requester.Session.Response.friendRemoveRes.Result = Result.Success;
-                    requester.Session.Response.friendRemoveRes.Errormsg = response.Errormsg;
+                    requester.Session.Response.friendAddRes.Result = Result.Success;
+                    requester.Session.Response.friendAddRes.Errormsg = "同意";
+                    requester.Session.Response.friendAddRes.Request = response.Request;
                     requester.SendResPonse();
+                    return;
                 }
+                //拒绝添加好友
+                requester.Session.Response.friendAddRes.Result = Result.Failed;
+                requester.Session.Response.friendAddRes.Errormsg = "拒绝";
+                requester.Session.Response.friendAddRes.Request = response.Request;
+                requester.SendResPonse();
             }
+            //请求者不在线
         }
 
         private void OnFriendRemoveReq(NetConnection<NetSession> sender, FriendRemoveRequest message)

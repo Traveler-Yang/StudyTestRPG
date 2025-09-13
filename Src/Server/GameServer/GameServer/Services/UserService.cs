@@ -219,7 +219,7 @@ namespace GameServer.Services
             Log.InfoFormat("UserService > CharacterLeave：CharacterID:{0}:{1}", character.Id, character.Info.Name);
             SessionManager.Instance.RemoveSession(character.Id);//角色离开删除会话对象
             CharacterManager.Instance.RemoveCharacter(character.entityId);//移除从客户端传送过来的角色
-            //character.Clear();//要先更改状态，再离开，并发送消息
+            character.Clear();//要先更改状态，再离开，并发送消息
             MapManager.Instance[character.Info.mapId].CharacterLeave(character);
         }
     }
