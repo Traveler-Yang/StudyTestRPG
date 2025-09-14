@@ -129,7 +129,7 @@ namespace GameServer.Services
                 toSession.Session.Response.friendRemoveNofity.Id = character.Info.Id;
                 toSession.Session.Response.friendRemoveNofity.Result = Result.Success;
                 toSession.Session.Response.friendRemoveNofity.Errormsg = string.Format("{0}将你从好友列表中删除了",character.Info.Id);
-                sender.SendResPonse();
+                toSession.SendResPonse();
             }
             //双向删除好友
             character.FriendManager.RemoveFriend(request.FriendId);
