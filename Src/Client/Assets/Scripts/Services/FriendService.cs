@@ -123,10 +123,10 @@ public class FriendService : Singleton<FriendService>, IDisposable
         Debug.LogFormat("OnFriendRemoveReq: RemoveToID£º[{0}] : [{1}] : [{2}]", response.Id, response.Result, response.Errormsg);
         if (response.Result == Result.Success)
         {
-            MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷³É¹¦£¡\n", response.Errormsg), "É¾³ýºÃÓÑ");
+            MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷³É¹¦£¡\n{0}", response.Errormsg), "É¾³ýºÃÓÑ");
             return;
         }
-        MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷Ê§°Ü£¡\n", response.Errormsg), "É¾³ýºÃÓÑ", MessageBoxType.Error);
+        MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷Ê§°Ü£¡\n{0}", response.Errormsg), "É¾³ýºÃÓÑ", MessageBoxType.Error);
     }
 
     private void OnFriendRemoveNotify(object sender, FriendRemoveNotify response)
@@ -134,9 +134,9 @@ public class FriendService : Singleton<FriendService>, IDisposable
         Debug.LogFormat("OnFriendRemoveNotify: RemoveToID£º[{0}] : [{1}] : [{2}]", response.Id, response.Result, response.Errormsg);
         if (response.Result == Result.Success)
         {
-            MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷³É¹¦£¡\n", response.Errormsg), "É¾³ýºÃÓÑ");
+            MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷³É¹¦£¡\n{0}", response.Errormsg), "É¾³ýºÃÓÑ");
             return;
         }
-        MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷Ê§°Ü£¡\n", response.Errormsg), "É¾³ýºÃÓÑ", MessageBoxType.Error);
+        MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷Ê§°Ü£¡\n{0}", response.Errormsg), "É¾³ýºÃÓÑ", MessageBoxType.Error);
     }
 }
