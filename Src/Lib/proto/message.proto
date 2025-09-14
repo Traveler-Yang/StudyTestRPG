@@ -94,7 +94,7 @@ message NCharacterInfo {
 	NBagInfo Bag = 12;//背包
 	bytes Equips = 13;//穿上的装备
 	repeated NQuestInfo quest = 14;//任务列表
-
+	repeated NFriendInfo friends = 15;//好友列表
 }
 
 message NItemInfo 
@@ -204,6 +204,10 @@ message NetMessageRequest{
 	QuestAcceptRequest questAccept = 13;
 	QuestSubmitRequest questSubmit = 14;
 
+	FriendAddRequest friendAddReq = 15;
+	FriendListRequest friendList = 16;
+	FriendRemoveRequest friendRemoveReq = 17;
+
 }
 
 message NetMessageResponse{
@@ -225,9 +229,13 @@ message NetMessageResponse{
 	QuestAcceptResponse questAccept = 13;
 	QuestSubmitResponse questSubmit = 14;
 
+	FriendAddResponse friendAddRes = 15;
+	FriendListResponse friendList = 16;
+	FriendRemoveResponse friendRemoveRes = 17;
 
 	StatusNotify statusNotify = 100;
-	
+	FriendAddNotify friendAddNotify = 101;
+	FriendRemoveNotify friendRemoveNotify = 102;
 }
 
 
@@ -444,3 +452,61 @@ message QuestAbandonResponse
 
 
 //Friend System
+
+message NFriendInfo//好友信息
+{
+	int32 id = 1;//好友id
+	NCharacterInfo info = 2;//好友的基础信息
+	bool status = 3;//状态
+}
+
+message FriendAddRequest//添加好友请求
+{
+	int32 from_id = 1;//请求者id
+	string from_name = 2;//请求者名字
+	int32 to_id = 3;//目标id
+	string to_name = 4;//目标名字
+}
+
+message FriendAddResponse//好友请求的发送者响应
+{
+	RESULT result = 1;
+	string errormsg = 2;
+}
+
+message FriendAddNotify//好友请求的接收者响应
+{	
+	int32 id = 1;
+	RESULT result = 2;
+	string errormsg = 3;
+}
+
+message FriendListRequest
+{
+}
+
+message FriendListResponse
+{
+	repeated NFriendInfo friends = 1;
+	RESULT result = 2;
+	string errormsg = 3;
+}
+
+message FriendRemoveRequest//好友删除请求
+{
+	int32 id = 1;
+}
+
+message FriendRemoveResponse//好友删除请求者响应
+{
+	int32 id = 1;
+	RESULT result = 2;
+	string errormsg = 3;
+}
+
+message FriendRemoveNotify//好友删除接收者响应
+{
+	int32 id = 1;
+	RESULT result = 2;
+	string errormsg = 3;
+}

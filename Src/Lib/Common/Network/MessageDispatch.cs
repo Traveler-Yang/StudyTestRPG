@@ -20,7 +20,11 @@ namespace Network
             if (message.statusNotify != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.statusNotify); }
             if (message.questAccept != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questAccept); }
             if (message.questSubmit != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questSubmit); }
-
+            if (message.friendAddRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddRes); }
+            if (message.friendList != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendList); }
+            if (message.friendRemoveRes != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendRemoveRes); }
+            if (message.friendAddNotify != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddNotify); }
+            if (message.friendRemoveNotify != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendRemoveNotify); }
 
         }
 
@@ -38,7 +42,9 @@ namespace Network
             if (message.itemEquip != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.itemEquip); }
             if (message.questAccept != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questAccept); }
             if (message.questSubmit != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.questSubmit); }
-
+            if (message.friendAddReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendAddReq); }
+            if (message.friendList != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendList); }
+            if (message.friendRemoveReq != null) { MessageDistributer<T>.Instance.RaiseEvent(sender, message.friendRemoveReq); }
 
         }
     }

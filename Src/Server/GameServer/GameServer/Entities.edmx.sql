@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 09/10/2025 22:13:30
+-- Date Created: 09/14/2025 20:42:09
 -- Generated from EDMX file: D:\GitMMORPG\StudyTestRPG\Src\Server\GameServer\GameServer\Entities.edmx
 -- --------------------------------------------------
 
@@ -32,6 +32,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_TCharacterTCharacterQuest]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[CharacterQuests] DROP CONSTRAINT [FK_TCharacterTCharacterQuest];
 GO
+IF OBJECT_ID(N'[dbo].[FK_TCharacterFriendTCharacter]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TCharacterFriends] DROP CONSTRAINT [FK_TCharacterFriendTCharacter];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -54,6 +57,9 @@ IF OBJECT_ID(N'[dbo].[CharacterBags]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[CharacterQuests]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CharacterQuests];
+GO
+IF OBJECT_ID(N'[dbo].[TCharacterFriends]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TCharacterFriends];
 GO
 
 -- --------------------------------------------------
@@ -125,6 +131,18 @@ CREATE TABLE [dbo].[CharacterQuests] (
 );
 GO
 
+-- Creating table 'TCharacterFriends'
+CREATE TABLE [dbo].[TCharacterFriends] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [CharacterID] int  NOT NULL,
+    [FriendID] int  NOT NULL,
+    [Name] nvarchar(max)  NOT NULL,
+    [Level] int  NOT NULL,
+    [Class] int  NOT NULL,
+    [Owner_ID] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -162,6 +180,12 @@ GO
 -- Creating primary key on [Id] in table 'CharacterQuests'
 ALTER TABLE [dbo].[CharacterQuests]
 ADD CONSTRAINT [PK_CharacterQuests]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'TCharacterFriends'
+ALTER TABLE [dbo].[TCharacterFriends]
+ADD CONSTRAINT [PK_TCharacterFriends]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -242,6 +266,21 @@ GO
 CREATE INDEX [IX_FK_TCharacterTCharacterQuest]
 ON [dbo].[CharacterQuests]
     ([TCharacterID]);
+GO
+
+-- Creating foreign key on [Owner_ID] in table 'TCharacterFriends'
+ALTER TABLE [dbo].[TCharacterFriends]
+ADD CONSTRAINT [FK_TCharacterFriendTCharacter]
+    FOREIGN KEY ([Owner_ID])
+    REFERENCES [dbo].[Characters]
+        ([ID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_TCharacterFriendTCharacter'
+CREATE INDEX [IX_FK_TCharacterFriendTCharacter]
+ON [dbo].[TCharacterFriends]
+    ([Owner_ID]);
 GO
 
 -- --------------------------------------------------
