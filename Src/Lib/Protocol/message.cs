@@ -89,6 +89,9 @@ namespace SkillBridge.Message
         [global::ProtoBuf.ProtoMember(15, Name = @"friends")]
         public global::System.Collections.Generic.List<NFriendInfo> Friends { get; } = new global::System.Collections.Generic.List<NFriendInfo>();
 
+        [global::ProtoBuf.ProtoMember(16)]
+        public global::System.Collections.Generic.List<NFriendApplyInfo> friendApplys { get; } = new global::System.Collections.Generic.List<NFriendApplyInfo>();
+
     }
 
     [global::ProtoBuf.ProtoContract()]
@@ -349,6 +352,9 @@ namespace SkillBridge.Message
 
         [global::ProtoBuf.ProtoMember(100)]
         public StatusNotify statusNotify { get; set; }
+
+        [global::ProtoBuf.ProtoMember(101)]
+        public FriendRemoveNotify friendRemoveNofity { get; set; }
 
     }
 
@@ -857,6 +863,24 @@ namespace SkillBridge.Message
     }
 
     [global::ProtoBuf.ProtoContract()]
+    public partial class NFriendApplyInfo : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1)]
+        public int ToId { get; set; }
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"info")]
+        public NCharacterInfo Info { get; set; }
+
+        [global::ProtoBuf.ProtoMember(4, Name = @"status")]
+        public ApplyType Status { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
     public partial class FriendAddRequest : global::ProtoBuf.IExtensible
     {
         private global::ProtoBuf.IExtension __pbn__extensionData;
@@ -899,6 +923,33 @@ namespace SkillBridge.Message
     }
 
     [global::ProtoBuf.ProtoContract()]
+    public partial class FriendApplyRequest : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class FriendApplyResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class FriendApplyNotify : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
     public partial class FriendListRequest : global::ProtoBuf.IExtensible
     {
         private global::ProtoBuf.IExtension __pbn__extensionData;
@@ -917,10 +968,13 @@ namespace SkillBridge.Message
         [global::ProtoBuf.ProtoMember(1, Name = @"friends")]
         public global::System.Collections.Generic.List<NFriendInfo> Friends { get; } = new global::System.Collections.Generic.List<NFriendInfo>();
 
-        [global::ProtoBuf.ProtoMember(2, Name = @"result")]
+        [global::ProtoBuf.ProtoMember(2)]
+        public global::System.Collections.Generic.List<NFriendApplyInfo> friendApplys { get; } = new global::System.Collections.Generic.List<NFriendApplyInfo>();
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"result")]
         public Result Result { get; set; }
 
-        [global::ProtoBuf.ProtoMember(3, Name = @"errormsg")]
+        [global::ProtoBuf.ProtoMember(4, Name = @"errormsg")]
         [global::System.ComponentModel.DefaultValue("")]
         public string Errormsg { get; set; } = "";
 
@@ -943,6 +997,25 @@ namespace SkillBridge.Message
 
     [global::ProtoBuf.ProtoContract()]
     public partial class FriendRemoveResponse : global::ProtoBuf.IExtensible
+    {
+        private global::ProtoBuf.IExtension __pbn__extensionData;
+        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
+            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
+
+        [global::ProtoBuf.ProtoMember(1, Name = @"result")]
+        public Result Result { get; set; }
+
+        [global::ProtoBuf.ProtoMember(2, Name = @"errormsg")]
+        [global::System.ComponentModel.DefaultValue("")]
+        public string Errormsg { get; set; } = "";
+
+        [global::ProtoBuf.ProtoMember(3, Name = @"id")]
+        public int Id { get; set; }
+
+    }
+
+    [global::ProtoBuf.ProtoContract()]
+    public partial class FriendRemoveNotify : global::ProtoBuf.IExtensible
     {
         private global::ProtoBuf.IExtension __pbn__extensionData;
         global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
@@ -1110,6 +1183,17 @@ namespace SkillBridge.Message
         InProgress = 1,
         [global::ProtoBuf.ProtoEnum(Name = @"FINISHED")]
         Finished = 2,
+    }
+
+    [global::ProtoBuf.ProtoContract(Name = @"APPLY_TYPE")]
+    public enum ApplyType
+    {
+        [global::ProtoBuf.ProtoEnum(Name = @"PENDING")]
+        Pending = 0,
+        [global::ProtoBuf.ProtoEnum(Name = @"AGREE")]
+        Agree = 1,
+        [global::ProtoBuf.ProtoEnum(Name = @"REFUSE")]
+        Refuse = 2,
     }
 
 }

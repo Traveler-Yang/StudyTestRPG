@@ -107,6 +107,28 @@ public class UIFriend : UIWindow
         }
     }
 
+    /// <summary>
+    /// 删除好友按钮
+    /// </summary>
+    public void OnRemoveFriendClick()
+    {
+        if (selectedItem == null)
+        {
+            MessageBox.Show("请选择要删除的好友", "删除好友", MessageBoxType.Information);
+            return;
+        }
+        if (User.Instance.CurrentCharacter.Id == selectedItem.info.Info.Id)
+        {
+            MessageBox.Show("好友列表出错，请联系管理员\n不可以删除自己", "删除好友", MessageBoxType.Error);
+            return;
+        }
+        var msgBox = MessageBox.Show(string.Format("确定要删除好友[{0}]吗？", selectedItem.info.Info.Name), "删除好友", MessageBoxType.Confirm, "确认", "取消");
+        msgBox.OnYes = () =>
+        {
+            FriendService.Instance.SendRemoveFriend(selectedItem.info.Info.Id);
+        };
+    }
+
     public void Clear()
     {
         this.friendList.RemoveAll();

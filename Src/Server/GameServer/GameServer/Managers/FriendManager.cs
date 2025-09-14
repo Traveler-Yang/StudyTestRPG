@@ -82,6 +82,21 @@ namespace GameServer.Managers
         }
 
         /// <summary>
+        /// 获取好友信息
+        /// </summary>
+        /// <param name="toId">目标id</param>
+        /// <returns></returns>
+        public NFriendInfo GetFriendInfo(int toId)
+        {
+            foreach (var f in friends)
+            {
+                if (toId == f.Info.Id)
+                    return f;
+            }
+            return null;
+        }
+
+        /// <summary>
         /// 更新
         /// </summary>
         /// <param name="friendInfo"></param>
@@ -132,6 +147,20 @@ namespace GameServer.Managers
             };
             Owner.TChar.Friends.Add(friend);
             FriendIsChanged = true;
+        }
+
+        /// <summary>
+        /// 删除好友
+        /// </summary>
+        /// <param name="toId"></param>
+        public void RemoveFriend(int toId)
+        {
+            var remFriend = this.Owner.TChar.Friends.FirstOrDefault(f => f.FriendID == toId);
+            if (remFriend != null)
+            {
+                DBService.Instance.Entities.TCharacterFriends.Remove(remFriend);
+                FriendIsChanged = true;
+            }
         }
 
         /// <summary>

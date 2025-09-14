@@ -22,7 +22,7 @@ public class UIFriendItem : ListView.ListViewItem
         backGround.sprite = selected ? selectBg : normalBg;
     }
 
-    NFriendInfo info;
+    public NFriendInfo info;
 
     public void SetFriendInfo(NFriendInfo info)
     {

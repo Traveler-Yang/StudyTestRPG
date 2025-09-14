@@ -95,6 +95,7 @@ message NCharacterInfo {
 	bytes Equips = 13;//穿上的装备
 	repeated NQuestInfo quest = 14;//任务列表
 	repeated NFriendInfo friends = 15;//好友列表
+	repeated NFriendApplyInfo friendApplys = 16;
 }
 
 message NItemInfo 
@@ -236,6 +237,7 @@ message NetMessageResponse{
 	FriendRemoveResponse friendRemoveRes = 18;
 
 	StatusNotify statusNotify = 100;
+	FriendRemoveNotify friendRemoveNofity = 101;
 	
 }
 
@@ -461,6 +463,20 @@ message NFriendInfo//好友信息
 	bool status = 3;//状态
 }
 
+message NFriendApplyInfo//好友申请信息
+{
+	int32 ToId = 1;//接收者id
+	NCharacterInfo info = 3;//信息
+	APPLY_TYPE status = 4;//状态：待审批、通过、拒绝
+}
+
+enum APPLY_TYPE
+{
+	PENDING = 0;//待审批
+	AGREE = 1;//通过
+	REFUSE = 2;//拒绝
+}
+
 message FriendAddRequest//请求申请添加好友的请求
 {
 	int32 to_id = 1;//目标id
@@ -476,6 +492,21 @@ message FriendAddResponse//请求申请添加好友的响应
 	FriendAddRequest request = 3;//请求信息
 }
 
+message FriendApplyRequest//好友申请信息请求
+{
+
+}
+
+message FriendApplyResponse//好友申请信息响应
+{
+
+}
+
+message FriendApplyNotify//是否同意好友审批
+{
+
+}
+
 message FriendListRequest//请求好友列表
 {
 }
@@ -483,8 +514,9 @@ message FriendListRequest//请求好友列表
 message FriendListResponse//好友列表更新
 {
 	repeated NFriendInfo friends = 1;
-	RESULT result = 2;
-	string errormsg = 3;
+	repeated NFriendApplyInfo friendApplys = 2;
+	RESULT result = 3;
+	string errormsg = 4;
 }
 
 message FriendRemoveRequest//删除好友请求
@@ -494,6 +526,13 @@ message FriendRemoveRequest//删除好友请求
 }
 
 message FriendRemoveResponse//删除好友响应
+{
+	RESULT result = 1;
+	string errormsg = 2;
+	int32 id = 3;
+}
+
+message FriendRemoveNotify//被删除一方的响应
 {
 	RESULT result = 1;
 	string errormsg = 2;

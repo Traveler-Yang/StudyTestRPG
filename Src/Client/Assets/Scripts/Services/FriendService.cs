@@ -22,7 +22,8 @@ public class FriendService : Singleton<FriendService>, IDisposable
         MessageDistributer.Instance.Subscribe<FriendAddRequest>(this.OnFriendAddReq);
         MessageDistributer.Instance.Subscribe<FriendAddResponse>(this.OnFriendAddRes);
         MessageDistributer.Instance.Subscribe<FriendListResponse>(this.OnFriendList);
-        //MessageDistributer.Instance.Subscribe<FriendRemoveResponse>(this.OnFriendRemoveReq);
+        MessageDistributer.Instance.Subscribe<FriendRemoveResponse>(this.OnFriendRemoveRes);
+        MessageDistributer.Instance.Subscribe<FriendRemoveNotify>(this.OnFriendRemoveNotify);
     }
 
     public void Dispose()
@@ -30,7 +31,8 @@ public class FriendService : Singleton<FriendService>, IDisposable
         MessageDistributer.Instance.Unsubscribe<FriendAddRequest>(this.OnFriendAddReq);
         MessageDistributer.Instance.Unsubscribe<FriendAddResponse>(this.OnFriendAddRes);
         MessageDistributer.Instance.Unsubscribe<FriendListResponse>(this.OnFriendList);
-        //MessageDistributer.Instance.Unsubscribe<FriendRemoveResponse>(this.OnFriendRemoveReq);
+        MessageDistributer.Instance.Unsubscribe<FriendRemoveResponse>(this.OnFriendRemoveRes);
+        MessageDistributer.Instance.Unsubscribe<FriendRemoveNotify>(this.OnFriendRemoveNotify);
     }
 
     /// <summary>
@@ -104,5 +106,37 @@ public class FriendService : Singleton<FriendService>, IDisposable
         FriendManager.Instance.allFriends = response.Friends;
         if(OnFriendsUpdate != null)
             OnFriendsUpdate.Invoke();
+    }
+
+    public void SendRemoveFriend(int FriendId)
+    {
+        NetMessage message = new NetMessage();
+        message.Request = new NetMessageRequest();
+        message.Request.friendRemoveReq = new FriendRemoveRequest();
+        message.Request.friendRemoveReq.UserId = User.Instance.CurrentCharacter.Id;
+        message.Request.friendRemoveReq.FriendId = FriendId;
+        NetClient.Instance.SendMessage(message);
+    }
+
+    private void OnFriendRemoveRes(object sender, FriendRemoveResponse response)
+    {
+        Debug.LogFormat("OnFriendRemoveReq: RemoveToID£º[{0}] : [{1}] : [{2}]", response.Id, response.Result, response.Errormsg);
+        if (response.Result == Result.Success)
+        {
+            MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷³É¹¦£¡\n", response.Errormsg), "É¾³ýºÃÓÑ");
+            return;
+        }
+        MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷Ê§°Ü£¡\n", response.Errormsg), "É¾³ýºÃÓÑ", MessageBoxType.Error);
+    }
+
+    private void OnFriendRemoveNotify(object sender, FriendRemoveNotify response)
+    {
+        Debug.LogFormat("OnFriendRemoveNotify: RemoveToID£º[{0}] : [{1}] : [{2}]", response.Id, response.Result, response.Errormsg);
+        if (response.Result == Result.Success)
+        {
+            MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷³É¹¦£¡\n", response.Errormsg), "É¾³ýºÃÓÑ");
+            return;
+        }
+        MessageBox.Show(string.Format("É¾³ýºÃÓÑ²Ù×÷Ê§°Ü£¡\n", response.Errormsg), "É¾³ýºÃÓÑ", MessageBoxType.Error);
     }
 }

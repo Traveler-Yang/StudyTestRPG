@@ -96,9 +96,50 @@ namespace GameServer.Services
             //请求者不在线
         }
 
-        private void OnFriendRemoveReq(NetConnection<NetSession> sender, FriendRemoveRequest message)
+        private void OnFriendRemoveReq(NetConnection<NetSession> sender, FriendRemoveRequest request)
         {
-            
+            Character character = sender.Session.Character;
+            Log.InfoFormat("OnFriendRemoveReq : : CharacterId [{0}] : ToId [{1}]", request.UserId, request.FriendId);
+            sender.Session.Response.friendRemoveRes = new FriendRemoveResponse();
+            //var friend = character.TChar.Friends.Where(f => f.FriendID == request.FriendId).FirstOrDefault();
+            NFriendInfo friend = character.FriendManager.GetFriendInfo(request.FriendId);
+            if (friend == null)//查找好友列表中有无此好友
+            {
+                sender.Session.Response.friendRemoveRes.Id = request.FriendId;
+                sender.Session.Response.friendRemoveRes.Result = Result.Failed;
+                sender.Session.Response.friendRemoveRes.Errormsg = "好友不存在";
+                sender.SendResPonse();
+                return;
+            }
+            NetConnection<NetSession> toSession = SessionManager.Instance.GetSession(request.FriendId);
+            if (toSession != null)
+            {
+                //var toFriend = toCharacter.TChar.Friends.Where(tf => tf.FriendID == character.Info.Id).FirstOrDefault();
+                NFriendInfo toFriend = toSession.Session.Character.FriendManager.GetFriendInfo(character.Info.Id);
+                if (toFriend == null)//校验对方好友列表中是否有自己
+                {
+                    sender.Session.Response.friendRemoveRes.Id = request.FriendId;
+                    sender.Session.Response.friendRemoveRes.Result = Result.Failed;
+                    sender.Session.Response.friendRemoveRes.Errormsg = "双方列表不一致，请联系管理员！";
+                    sender.SendResPonse();
+                    return;
+                }
+                //对方在线
+                toSession.Session.Response.friendRemoveNofity = new FriendRemoveNotify();
+                toSession.Session.Response.friendRemoveNofity.Id = character.Info.Id;
+                toSession.Session.Response.friendRemoveNofity.Result = Result.Success;
+                toSession.Session.Response.friendRemoveNofity.Errormsg = string.Format("{0}将你从好友列表中删除了",character.Info.Id);
+                sender.SendResPonse();
+            }
+            //双向删除好友
+            character.FriendManager.RemoveFriend(request.FriendId);
+            toSession.Session.Character.FriendManager.RemoveFriend(character.Info.Id);
+            DBService.Instance.Save();
+            sender.Session.Response.friendRemoveRes = new FriendRemoveResponse();
+            sender.Session.Response.friendRemoveRes.Id = request.FriendId;
+            sender.Session.Response.friendRemoveRes.Result = Result.Success;
+            sender.Session.Response.friendRemoveRes.Errormsg = string.Format("成功将[{0}]好友删除", request.FriendId);
+            sender.SendResPonse();
         }
     }
 }
