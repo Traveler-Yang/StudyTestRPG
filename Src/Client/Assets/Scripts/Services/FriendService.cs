@@ -51,9 +51,50 @@ public class FriendService : Singleton<FriendService>, IDisposable
         NetClient.Instance.SendMessage(message);
     }
 
+    /// <summary>
+    /// 添加好友的请求方响应
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="message"></param>
     private void OnFriendAddRes(object sender, FriendAddResponse message)
     {
-        
+        Debug.LogFormat("OnFriendAddRes : Result:{0} ErrorMsg{1}", message.Result, message.Errormsg);
+        if (message.Result == Result.Success)
+        {
+            MessageBox.Show(message.Errormsg, "添加好友");
+        }
+    }
+
+    public void SendFriendAddNotify(bool isAgree)
+    {
+        NetMessage message = new NetMessage();
+        message.Response = new NetMessageResponse();
+        message.Response.friendAddRes = new FriendAddResponse();
+        message.Response.friendAddRes.Result = isAgree ? Result.Success : Result.Success;
+        message.Response.friendAddRes.Errormsg = isAgree ? "对方同意了你的请求" : "对方拒绝了你的请求";
+        NetClient.Instance.SendMessage(message);
+    }
+
+    /// <summary>
+    /// 添加好友的接收方响应
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="message"></param>
+    private void OnFriendAddNotify(object sender, FriendAddNotify message)
+    {
+        Debug.LogFormat("OnFriendAddNotify : Result:{0} ErrorMsg{1}", message.Result, message.Errormsg);
+        if (message.Result == Result.Success)
+        {
+            var msgBox = MessageBox.Show(message.Errormsg, "添加好友", MessageBoxType.Confirm, "同意", "拒绝");
+            msgBox.OnYes = () =>
+            {
+                this.SendFriendAddNotify(true);
+            };
+            msgBox.OnNo = () =>
+            {
+                this.SendFriendAddNotify(false);
+            };
+        }
     }
 
     private void OnFriendList(object sender, FriendListResponse message)
@@ -62,11 +103,6 @@ public class FriendService : Singleton<FriendService>, IDisposable
     }
 
     private void OnFriendRemoveRes(object sender, FriendRemoveResponse message)
-    {
-        
-    }
-
-    private void OnFriendAddNotify(object sender, FriendAddNotify message)
     {
         
     }
