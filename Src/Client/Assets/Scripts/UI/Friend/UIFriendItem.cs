@@ -19,6 +19,11 @@ public class UIFriendItem : ListView.ListViewItem
 
     public NFriendInfo info;
 
+    public override void onSelected(bool selected)
+    {
+        this.backGround.overrideSprite = selected ? selectBg : normalBg;
+    }
+
     public void SetFriendInfo(NFriendInfo info)
     {
         this.info = info;
