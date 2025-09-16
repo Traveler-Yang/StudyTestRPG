@@ -77,6 +77,7 @@ namespace GameServer.Managers
                     friendInfo.FriendManager.UpdateFriendStatus(this.Owner.Info, false);
                 }
             }
+            friendChanged = true;
         }
 
         /// <summary>
@@ -132,6 +133,7 @@ namespace GameServer.Managers
                 Class = (int)CharacterManager.Instance.GetCharacter(toId).Info.Class
             };
             this.Owner.TChar.Friends.Add(friend);
+            friendChanged = true;
         }
 
         /// <summary>

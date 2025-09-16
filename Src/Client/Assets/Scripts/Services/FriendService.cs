@@ -98,6 +98,7 @@ public class FriendService : Singleton<FriendService>, IDisposable
 
     private void OnFriendList(object sender, FriendListResponse message)
     {
+        Debug.LogFormat("OnFriendList : Result:{0} ErrorMsg{1}", message.Result, message.Errormsg);
         this.UpdateFriendList?.Invoke();
         FriendManager.Instance.allFriend = message.Friends;
     }
