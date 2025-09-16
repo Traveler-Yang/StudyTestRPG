@@ -279,9 +279,12 @@ namespace SkillBridge.Message
         public FriendAddRequest friendAddReq { get; set; }
 
         [global::ProtoBuf.ProtoMember(16)]
-        public FriendListRequest friendList { get; set; }
+        public FriendAddResponse friendAddRes { get; set; }
 
         [global::ProtoBuf.ProtoMember(17)]
+        public FriendListRequest friendList { get; set; }
+
+        [global::ProtoBuf.ProtoMember(18)]
         public FriendRemoveRequest friendRemoveReq { get; set; }
 
     }
@@ -333,21 +336,21 @@ namespace SkillBridge.Message
         public QuestSubmitResponse questSubmit { get; set; }
 
         [global::ProtoBuf.ProtoMember(15)]
-        public FriendAddResponse friendAddRes { get; set; }
+        public FriendAddRequest friendAddReq { get; set; }
 
         [global::ProtoBuf.ProtoMember(16)]
-        public FriendListResponse friendList { get; set; }
+        public FriendAddResponse friendAddRes { get; set; }
 
         [global::ProtoBuf.ProtoMember(17)]
+        public FriendListResponse friendList { get; set; }
+
+        [global::ProtoBuf.ProtoMember(18)]
         public FriendRemoveResponse friendRemoveRes { get; set; }
 
         [global::ProtoBuf.ProtoMember(100)]
         public StatusNotify statusNotify { get; set; }
 
         [global::ProtoBuf.ProtoMember(101)]
-        public FriendAddNotify friendAddNotify { get; set; }
-
-        [global::ProtoBuf.ProtoMember(102)]
         public FriendRemoveNotify friendRemoveNotify { get; set; }
 
     }
@@ -893,24 +896,8 @@ namespace SkillBridge.Message
         [global::System.ComponentModel.DefaultValue("")]
         public string Errormsg { get; set; } = "";
 
-    }
-
-    [global::ProtoBuf.ProtoContract()]
-    public partial class FriendAddNotify : global::ProtoBuf.IExtensible
-    {
-        private global::ProtoBuf.IExtension __pbn__extensionData;
-        global::ProtoBuf.IExtension global::ProtoBuf.IExtensible.GetExtensionObject(bool createIfMissing)
-            => global::ProtoBuf.Extensible.GetExtensionObject(ref __pbn__extensionData, createIfMissing);
-
-        [global::ProtoBuf.ProtoMember(1, Name = @"id")]
-        public int Id { get; set; }
-
-        [global::ProtoBuf.ProtoMember(2, Name = @"result")]
-        public Result Result { get; set; }
-
-        [global::ProtoBuf.ProtoMember(3, Name = @"errormsg")]
-        [global::System.ComponentModel.DefaultValue("")]
-        public string Errormsg { get; set; } = "";
+        [global::ProtoBuf.ProtoMember(3, Name = @"request")]
+        public FriendAddRequest Request { get; set; }
 
     }
 

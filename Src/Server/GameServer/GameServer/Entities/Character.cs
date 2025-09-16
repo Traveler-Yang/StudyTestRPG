@@ -17,7 +17,7 @@ namespace GameServer.Entities
     /// Character
     /// 玩家角色类
     /// </summary>
-    class Character : CharacterBase
+    class Character : CharacterBase, IPostResponser
     {
        
         public TCharacter TChar;
@@ -73,6 +73,16 @@ namespace GameServer.Entities
             }
         }
 
+        public void PostProcess(NetMessageResponse message)
+        {
+            this.FriendManager.PostProcess(message);
+        }
+
+        public void Clear()
+        {
+            this.FriendManager.OffLineNotify();
+        }
+
         public NCharacterInfo GetBasicInfo()
         {
             return new NCharacterInfo()
@@ -83,5 +93,6 @@ namespace GameServer.Entities
                 Level = this.Info.Level,
             };
         }
+
     }
 }

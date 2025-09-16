@@ -205,8 +205,9 @@ message NetMessageRequest{
 	QuestSubmitRequest questSubmit = 14;
 
 	FriendAddRequest friendAddReq = 15;
-	FriendListRequest friendList = 16;
-	FriendRemoveRequest friendRemoveReq = 17;
+	FriendAddResponse friendAddRes = 16;
+	FriendListRequest friendList = 17;
+	FriendRemoveRequest friendRemoveReq = 18;
 
 }
 
@@ -229,13 +230,13 @@ message NetMessageResponse{
 	QuestAcceptResponse questAccept = 13;
 	QuestSubmitResponse questSubmit = 14;
 
-	FriendAddResponse friendAddRes = 15;
-	FriendListResponse friendList = 16;
-	FriendRemoveResponse friendRemoveRes = 17;
+	FriendAddRequest friendAddReq = 15;
+	FriendAddResponse friendAddRes = 16;
+	FriendListResponse friendList = 17;
+	FriendRemoveResponse friendRemoveRes = 18;
 
 	StatusNotify statusNotify = 100;
-	FriendAddNotify friendAddNotify = 101;
-	FriendRemoveNotify friendRemoveNotify = 102;
+	FriendRemoveNotify friendRemoveNotify = 101;
 }
 
 
@@ -472,13 +473,7 @@ message FriendAddResponse//好友请求的发送者响应
 {
 	RESULT result = 1;
 	string errormsg = 2;
-}
-
-message FriendAddNotify//好友请求的接收者响应
-{	
-	int32 id = 1;
-	RESULT result = 2;
-	string errormsg = 3;
+	FriendAddRequest request = 3;
 }
 
 message FriendListRequest

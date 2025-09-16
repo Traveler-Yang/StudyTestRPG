@@ -191,7 +191,7 @@ namespace GameServer.Services
             sender.Session.Response.gameEnter.Errormsg = "None";//错误信息
 
             sender.Session.Character = character;
-            //sender.Session.PostResponser = character;//进入游戏给后处理器赋值（里氏替换）
+            sender.Session.PostResponser = character;//进入游戏给后处理器赋值（里氏替换）
 
             sender.Session.Response.gameEnter.Character = character.Info;//进入成功 发送初始角色信息给客户端
             sender.SendResPonse();
@@ -219,7 +219,7 @@ namespace GameServer.Services
             Log.InfoFormat("UserService > CharacterLeave：CharacterID:{0}:{1}", character.Id, character.Info.Name);
             SessionManager.Instance.RemoveSession(character.Id);//角色离开删除会话对象
             CharacterManager.Instance.RemoveCharacter(character.entityId);//移除从客户端传送过来的角色
-            //character.Clear();//要先更改状态，再离开，并发送消息
+            character.Clear();//要先更改状态，再离开，并发送消息
             MapManager.Instance[character.Info.mapId].CharacterLeave(character);
         }
     }
